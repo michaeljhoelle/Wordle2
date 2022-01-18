@@ -22,7 +22,6 @@ export class AppComponent implements OnInit {
 
   @HostListener('document:keydown', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent) {
-    console.log(event.key);
     if (this.isAlpha(event.key)) {
       this.addLetter(event.key);
     } else if (event.key === "Enter") {
