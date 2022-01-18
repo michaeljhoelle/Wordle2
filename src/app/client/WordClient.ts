@@ -13,7 +13,7 @@ export class WordClient {
   'Access-Control-Allow-Credentials': 'true',
   'Access-Control-Allow-Headers': 'Content-Type',
   'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE'});
-  url = "http://lootboxsim-env.eba-j5ptekaw.us-east-2.elasticbeanstalk.com";
+  url = "https://api.memecenter.org";
 
   verifyWord(word: string) {
     return this.http.get<number[]>(this.url + "/words/verify/" + word, {headers: this.headers});
