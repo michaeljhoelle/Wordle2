@@ -54,3 +54,21 @@ app-word-row {
   color: crimson;
   font-size: 24px;
 }
+
+.Wrong {
+  background: #787c7e;
+  color: white;
+  border: none
+}
+
+.Close {
+  background: #c9b458;
+  color: white;
+  border: none
+}
+
+.Correct {
+  background: #6aaa64;
+  color: white;
+  border: none
+}
