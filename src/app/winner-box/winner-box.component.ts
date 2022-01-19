@@ -33,6 +33,9 @@ export class WinnerBoxComponent implements OnInit {
       case 5:
         this.rank = "the champions’ zone. true indicator of skill. hard-fought victory, like battling a fish for hours and finally reeling it in"
         break;
+      case 69:
+        this.rank = "nice"
+        break;
       default:
         this.rank = "stupid idiot"
       }
