@@ -1,6 +1,8 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
+import {FormBuilder, FormGroup} from "@angular/forms";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
+import {WordRow} from "../model/WordRow";
+import {LetterboxStyle} from "../model/LetterBox";
 
 @Component({
   selector: 'app-winner-box',
@@ -11,12 +13,14 @@ export class WinnerBoxComponent implements OnInit {
 
   form: FormGroup = new FormGroup({});
   rank: string;
+  result: WordRow[];
 
   constructor (
     private fb: FormBuilder,
     private dialogRef: MatDialogRef<WinnerBoxComponent>,
     @Inject(MAT_DIALOG_DATA) data: any) {
 
+    this.result = data.result;
     switch (data.tries) {
       case 1:
       case 2:
@@ -43,6 +47,27 @@ export class WinnerBoxComponent implements OnInit {
 
   close() {
     this.dialogRef.close();
+  }
+
+  getResult() {
+    let tries = this.result.length
+    let triesText = this.result.length > 1 ? " tries" : " try";
+    let out = "Wordle 2\r\n" + tries + triesText + "\r\n";
+    for (let i = 0; i < this.result.length; i++) {
+      let str = this.result[i].letters.map(s => {
+        switch (s.style) {
+          default:
+          case LetterboxStyle.Wrong:
+            return "⬜"
+          case LetterboxStyle.Close:
+            return "🟨"
+          case LetterboxStyle.Correct:
+            return "🟩"
+        }
+      }).join("") + "\r\n";
+      out = out.concat(str)
+    }
+    return out;
   }
 
 }

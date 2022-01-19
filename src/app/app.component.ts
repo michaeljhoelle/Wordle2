@@ -54,7 +54,8 @@ export class AppComponent implements OnInit {
 
     dialogConfig.data = {
       id: 1,
-      tries: this.currentRow + 1
+      tries: this.currentRow + 1,
+      result: this.rows
     };
 
     this.dialog.open(WinnerBoxComponent, dialogConfig);

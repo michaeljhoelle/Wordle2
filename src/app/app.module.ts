@@ -14,6 +14,7 @@ import { WinnerBoxComponent } from './winner-box/winner-box.component';
 import {MatDialogModule} from "@angular/material/dialog";
 import {ReactiveFormsModule} from "@angular/forms";
 import {MatIconModule} from "@angular/material/icon";
+import {ClipboardModule} from "@angular/cdk/clipboard";
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import {MatIconModule} from "@angular/material/icon";
     ButtonModule,
     MatDialogModule,
     ReactiveFormsModule,
-    MatIconModule
+    MatIconModule,
+    ClipboardModule
   ],
   providers: [],
   bootstrap: [AppComponent]

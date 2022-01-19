@@ -1,6 +1,6 @@
 <p class="mat-title title">{{rank}}</p>
 <div class="button-row">
-  <button class="share-text">
+  <button class="share-text" [cdkCopyToClipboard]="getResult()">
     Share
     <mat-icon>share</mat-icon>
   </button>
