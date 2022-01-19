@@ -1,3 +1,7 @@
+.body {
+  font-family: Calibri, sans-serif;
+}
+
 .master {
   width: 500px;
   height: 100%;
@@ -71,4 +75,11 @@ app-word-row {
   background: #6aaa64;
   color: white;
   border: none
+}
+
+.timer {
+  font-size: 32px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
 }

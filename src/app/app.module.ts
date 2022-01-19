@@ -10,12 +10,17 @@ import { LetterBoxComponent } from './letter-box/letter-box.component';
 import {FormsModule} from "@angular/forms";
 import {ToastModule} from "@syncfusion/ej2-angular-notifications";
 import {ButtonModule} from "@syncfusion/ej2-angular-buttons";
+import { WinnerBoxComponent } from './winner-box/winner-box.component';
+import {MatDialogModule} from "@angular/material/dialog";
+import {ReactiveFormsModule} from "@angular/forms";
+import {MatIconModule} from "@angular/material/icon";
 
 @NgModule({
   declarations: [
     AppComponent,
     WordRowComponent,
-    LetterBoxComponent
+    LetterBoxComponent,
+    WinnerBoxComponent
   ],
   imports: [
     BrowserModule,
@@ -24,7 +29,10 @@ import {ButtonModule} from "@syncfusion/ej2-angular-buttons";
     MatInputModule,
     FormsModule,
     ToastModule,
-    ButtonModule
+    ButtonModule,
+    MatDialogModule,
+    ReactiveFormsModule,
+    MatIconModule
   ],
   providers: [],
   bootstrap: [AppComponent]

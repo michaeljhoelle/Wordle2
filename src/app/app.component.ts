@@ -3,7 +3,9 @@ import {WordClient} from "./client/WordClient";
 import {WordRowComponent} from "./word-row/word-row.component";
 import {WordRow} from "./model/WordRow";
 import {LetterboxStyle} from "./model/LetterBox";
-import {timer} from "rxjs";
+import {interval, Subscription, timer} from "rxjs";
+import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
+import {WinnerBoxComponent} from "./winner-box/winner-box.component";
 
 @Component({
   selector: 'app-root',
@@ -11,7 +13,7 @@ import {timer} from "rxjs";
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
-  constructor(private wordClient: WordClient) {}
+  constructor(private wordClient: WordClient, private dialog: MatDialog) {}
   showError: boolean = false;
   errorMsg: string = "";
   title = "Title";
@@ -19,6 +21,48 @@ export class AppComponent implements OnInit {
   currentRow: number = 0;
   currentChar: number = 0;
   letterStyles: Map<string, string> = this.getDefaultLetterStyles();
+
+  timeSubscription: Subscription = new Subscription();
+
+  public dateNow = new Date();
+  public dDay = new Date();
+  milliSecondsInASecond = 1000;
+  minutesInAnHour = 60;
+  SecondsInAMinute  = 60;
+
+  public timeDifference: number = 0;
+  public millisecondsToDday: string = "";
+  public secondsToDday: string = "";
+  public minutesToDday: string = "";
+
+  private getTimeDifference () {
+    this.timeDifference = this.dDay.getTime() - new Date().getTime();
+    this.allocateTimeUnits(this.timeDifference);
+  }
+
+  private allocateTimeUnits (timeDifference: number) {
+    this.millisecondsToDday = ('00' + (timeDifference % this.milliSecondsInASecond).toString()).slice(-3);
+    this.secondsToDday = ('0' + (Math.floor((timeDifference) / (this.milliSecondsInASecond) % this.SecondsInAMinute)).toString()).slice(-2);
+    this.minutesToDday = ('0' + (Math.floor((timeDifference) / (this.milliSecondsInASecond * this.minutesInAnHour) % this.SecondsInAMinute)).toString()).slice(-2);
+  }
+
+  displayWinnerMessage() {
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+
+    dialogConfig.data = {
+      id: 1,
+      tries: this.currentRow + 1
+    };
+
+    this.dialog.open(WinnerBoxComponent, dialogConfig);
+  }
+
+  hideWinnerMessage() {
+    this.dialog.closeAll();
+  }
 
   @HostListener('document:keydown', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent) {
@@ -48,28 +92,28 @@ export class AppComponent implements OnInit {
               case 0:
               default:
                 style = LetterboxStyle.Wrong;
-                this.letterStyles.set(this.rows[this.currentRow].letters[i].letter, LetterboxStyle.Wrong)
+                this.setLetterStyle(this.rows[this.currentRow].letters[i].letter, LetterboxStyle.Wrong)
                 winner = false;
                 break;
               case 1:
                 if (this.letterIsCorrectElsewhere(data, i)) {
                   style = LetterboxStyle.Wrong
-                  this.letterStyles.set(this.rows[this.currentRow].letters[i].letter, LetterboxStyle.Wrong)
+                  this.setLetterStyle(this.rows[this.currentRow].letters[i].letter, LetterboxStyle.Wrong)
                 } else {
                   style = LetterboxStyle.Close;
-                  this.letterStyles.set(this.rows[this.currentRow].letters[i].letter, LetterboxStyle.Close)
+                  this.setLetterStyle(this.rows[this.currentRow].letters[i].letter, LetterboxStyle.Close);
                 }
                 winner = false;
                 break;
               case 2:
                 style = LetterboxStyle.Correct;
-                this.letterStyles.set(this.rows[this.currentRow].letters[i].letter, LetterboxStyle.Correct)
+                this.setLetterStyle(this.rows[this.currentRow].letters[i].letter, LetterboxStyle.Correct)
             }
             this.rows[this.currentRow].letters[i].style = style;
           }
           if (winner) {
-            this.displayError("LGTM!");
-            timer(2000).subscribe(s => this.reset())
+            this.displayWinnerMessage();
+            timer(this.timeDifference).subscribe(s => this.reset())
           } else {
             let newRow = new WordRowComponent();
             newRow.letters = ["", "", "", "", ""].map(s => ({letter: s, style: LetterboxStyle.Empty}))
@@ -81,6 +125,12 @@ export class AppComponent implements OnInit {
           this.displayError("Maybe try typing a real word?");
         }
       });
+  }
+
+  setLetterStyle(letter: string, style: LetterboxStyle) {
+    if (this.letterStyles.get(letter) != LetterboxStyle.Correct) {
+      this.letterStyles.set(letter, style)
+    }
   }
 
   letterIsCorrectElsewhere(result: number[], index: number) {
@@ -112,9 +162,9 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    let newRow = new WordRowComponent();
-    newRow.letters = ["", "", "", "", ""].map(s => ({letter: s, style: LetterboxStyle.Empty}))
-    this.rows.push(newRow);
+    this.reset()
+    this.timeSubscription = interval(1)
+      .subscribe(x => { this.getTimeDifference(); });
   }
 
   isAlpha(str: string) {
@@ -153,6 +203,7 @@ export class AppComponent implements OnInit {
   }
 
   reset() {
+    this.hideWinnerMessage();
     this.rows = [];
     let newRow = new WordRowComponent();
     newRow.letters = ["", "", "", "", ""].map(s => ({letter: s, style: LetterboxStyle.Empty}))
@@ -160,5 +211,14 @@ export class AppComponent implements OnInit {
     this.currentChar = 0;
     this.currentRow = 0;
     this.letterStyles = this.getDefaultLetterStyles();
+
+    this.dateNow = new Date();
+    this.dDay = new Date(this.dateNow.getFullYear(), this.dateNow.getMonth(), this.dateNow.getDate())
+    if (this.dateNow.getMinutes() > 30) {
+      this.dDay.setHours(this.dateNow.getHours() + 1)
+    } else {
+      this.dDay.setHours(this.dateNow.getHours())
+      this.dDay.setMinutes(30);
+    }
   }
 }

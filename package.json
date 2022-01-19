@@ -22,6 +22,7 @@
     "@angular/platform-browser": "~13.1.0",
     "@angular/platform-browser-dynamic": "~13.1.0",
     "@angular/router": "~13.1.0",
+    "@briebug/mat-dialog-schematic": "^1.0.2",
     "@syncfusion/ej2-angular-buttons": "^19.4.42",
     "@syncfusion/ej2-angular-notifications": "^19.4.38",
     "express": "^4.17.2",
