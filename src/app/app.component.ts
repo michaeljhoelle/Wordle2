@@ -114,7 +114,7 @@ export class AppComponent implements OnInit {
           }
           if (winner) {
             this.displayWinnerMessage();
-            timer(this.timeDifference).subscribe(s => this.reset())
+            timer(this.timeDifference).subscribe(() => this.reset())
           } else {
             let newRow = new WordRowComponent();
             newRow.letters = ["", "", "", "", ""].map(s => ({letter: s, style: LetterboxStyle.Empty}))
@@ -136,8 +136,8 @@ export class AppComponent implements OnInit {
 
   letterIsCorrectElsewhere(result: number[], index: number) {
     let attemptedLetter = this.rows[this.currentRow].letters[index].letter;
-    for (let i = 0; i < 5 && i != index; i++) {
-      if (this.rows[this.currentRow].letters[i].letter == attemptedLetter && result[i] == 2) {
+    for (let i = 0; i < 5; i++) {
+      if (this.rows[this.currentRow].letters[i].letter == attemptedLetter && result[i] == 2 && i != index) {
         return true;
       }
     }
