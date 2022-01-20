@@ -34,7 +34,7 @@ export class AppComponent implements OnInit {
         this.dDay = this.getNextResetTime();
         let previousWinData: WordRow[] = JSON.parse(data);
         this.rows = previousWinData;
-        this.currentRow = previousWinData.length;
+        this.currentRow = previousWinData.length - 1;
         this.getTimeDifference();
         this.displayWinnerMessage();
       }
