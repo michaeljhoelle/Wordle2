@@ -22,6 +22,42 @@ export class AppComponent implements OnInit {
   currentChar: number = 0;
   letterStyles: Map<string, string> = this.getDefaultLetterStyles();
 
+  ngOnInit(): void {
+    let time = localStorage.getItem('lastWinTime');
+    let data = localStorage.getItem('data');
+    let timeJson: Date;
+    if (time != null && data != null) {
+      timeJson = new Date(JSON.parse(time));
+      if (timeJson < this.getLastResetTime()) {
+        this.reset()
+      } else {
+        this.dDay = this.getNextResetTime();
+        let previousWinData: WordRow[] = JSON.parse(data);
+        this.rows = previousWinData;
+        this.currentRow = previousWinData.length;
+        this.getTimeDifference();
+        this.displayWinnerMessage();
+      }
+    } else {
+      this.reset()
+    }
+    this.timeSubscription = interval(1)
+      .subscribe(x => { this.getTimeDifference(); });
+  }
+
+  reset() {
+    this.hideWinnerMessage();
+    this.rows = [];
+    let newRow = new WordRowComponent();
+    newRow.letters = ["", "", "", "", ""].map(s => ({letter: s, style: LetterboxStyle.Empty}))
+    this.rows.push(newRow);
+    this.currentChar = 0;
+    this.currentRow = 0;
+    this.letterStyles = this.getDefaultLetterStyles();
+
+    this.dDay = this.getNextResetTime();
+  }
+
   timeSubscription: Subscription = new Subscription();
 
   public dateNow = new Date();
@@ -35,12 +71,12 @@ export class AppComponent implements OnInit {
   public secondsToDday: string = "";
   public minutesToDday: string = "";
 
-  private getTimeDifference () {
+  private getTimeDifference() {
     this.timeDifference = this.dDay.getTime() - new Date().getTime();
     this.allocateTimeUnits(this.timeDifference);
   }
 
-  private allocateTimeUnits (timeDifference: number) {
+  private allocateTimeUnits(timeDifference: number) {
     this.millisecondsToDday = ('00' + (timeDifference % this.milliSecondsInASecond).toString()).slice(-3);
     this.secondsToDday = ('0' + (Math.floor((timeDifference) / (this.milliSecondsInASecond) % this.SecondsInAMinute)).toString()).slice(-2);
     this.minutesToDday = ('0' + (Math.floor((timeDifference) / (this.milliSecondsInASecond * this.minutesInAnHour) % this.SecondsInAMinute)).toString()).slice(-2);
@@ -53,12 +89,12 @@ export class AppComponent implements OnInit {
     dialogConfig.autoFocus = true;
 
     dialogConfig.data = {
-      id: 1,
       tries: this.currentRow + 1,
       result: this.rows
     };
 
     this.dialog.open(WinnerBoxComponent, dialogConfig);
+    timer(this.timeDifference).subscribe(() => this.reset())
   }
 
   hideWinnerMessage() {
@@ -113,8 +149,11 @@ export class AppComponent implements OnInit {
             this.rows[this.currentRow].letters[i].style = style;
           }
           if (winner) {
+
+            localStorage.setItem('data', JSON.stringify(this.rows));
+            localStorage.setItem('lastWinTime', JSON.stringify(new Date()));
+
             this.displayWinnerMessage();
-            timer(this.timeDifference).subscribe(() => this.reset())
           } else {
             let newRow = new WordRowComponent();
             newRow.letters = ["", "", "", "", ""].map(s => ({letter: s, style: LetterboxStyle.Empty}))
@@ -162,10 +201,29 @@ export class AppComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {
-    this.reset()
-    this.timeSubscription = interval(1)
-      .subscribe(x => { this.getTimeDifference(); });
+  getLastResetTime() {
+    let now = new Date();
+    let minute;
+    if (now.getMinutes() > 30) {
+      minute = 30;
+    } else {
+      minute = 0;
+    }
+    return new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours(), minute, 0, 0)
+  }
+
+  getNextResetTime() {
+    let now = new Date();
+    let minute;
+    let hour;
+    if (now.getMinutes() > 30) {
+      hour = now.getHours() + 1;
+      minute = 0;
+    } else {
+      hour = now.getHours();
+      minute = 30;
+    }
+    return new Date(now.getFullYear(), now.getMonth(), now.getDate(), hour, minute, 0, 0)
   }
 
   isAlpha(str: string) {
@@ -201,25 +259,5 @@ export class AppComponent implements OnInit {
       ["Y", LetterboxStyle.Empty.toString()],
       ["Z", LetterboxStyle.Empty.toString()],
     ])
-  }
-
-  reset() {
-    this.hideWinnerMessage();
-    this.rows = [];
-    let newRow = new WordRowComponent();
-    newRow.letters = ["", "", "", "", ""].map(s => ({letter: s, style: LetterboxStyle.Empty}))
-    this.rows.push(newRow);
-    this.currentChar = 0;
-    this.currentRow = 0;
-    this.letterStyles = this.getDefaultLetterStyles();
-
-    this.dateNow = new Date();
-    this.dDay = new Date(this.dateNow.getFullYear(), this.dateNow.getMonth(), this.dateNow.getDate())
-    if (this.dateNow.getMinutes() > 30) {
-      this.dDay.setHours(this.dateNow.getHours() + 1)
-    } else {
-      this.dDay.setHours(this.dateNow.getHours())
-      this.dDay.setMinutes(30);
-    }
   }
 }

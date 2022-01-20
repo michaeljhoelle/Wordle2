@@ -3,13 +3,12 @@
     <app-word-row *ngFor="let row of rows; let i = index;" [letters]="rows[i].letters"></app-word-row>
   </div>
 
-  <div class="button-bar">
-    <div *ngIf="showError">
-      <div class="error-msg">{{errorMsg}}</div>
-    </div>
-  </div>
-
   <div class="keyboard">
+    <div class="button-bar">
+      <div *ngIf="showError">
+        <div class="error-msg">{{errorMsg}}</div>
+      </div>
+    </div>
     <div class="button-bar">
       <button [className]="'keyboard-button ' + letterStyles.get('Q')" (click)="addLetter('Q')">Q</button>
       <button [className]="'keyboard-button ' + letterStyles.get('W')" (click)="addLetter('W')">W</button>
