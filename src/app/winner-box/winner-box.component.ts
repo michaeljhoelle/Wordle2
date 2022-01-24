@@ -23,21 +23,28 @@ export class WinnerBoxComponent implements OnInit {
     this.result = data.result;
     switch (data.tries) {
       case 1:
+        this.rank = "1 try (╬ಠ益ಠ)";
+        break;
       case 2:
-        this.rank =  "pure luck"
+        this.rank = "2 tries ( ͠° ͟ʖ ͡°)";
         break;
       case 3:
-        this.rank = "potentially a great performance, but I’m suspicious"
+        this.rank = "3 tries (☞ ͡° ͜ʖ ͡°)☞";
         break;
       case 4:
+        this.rank = "4 tries ( ͡° ͜ʖ ͡°)";
+        break;
       case 5:
-        this.rank = "the champions’ zone. true indicator of skill. hard-fought victory, like battling a fish for hours and finally reeling it in"
+        this.rank = "5 tries ( ಠ ͜ʖಠ)";
+        break;
+      case 6:
+        this.rank = "6 tries (ó﹏ò｡)";
         break;
       case 69:
-        this.rank = "nice"
+        this.rank = "nice ( ͡~ ͜ʖ ͡°)"
         break;
       default:
-        this.rank = "stupid idiot"
+        this.rank = "(╯ ͠° ͟ʖ ͡°)╯┻━┻"
       }
   }
 
