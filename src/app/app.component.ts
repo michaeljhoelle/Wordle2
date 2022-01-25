@@ -77,6 +77,9 @@ export class AppComponent implements OnInit {
   }
 
   private allocateTimeUnits(timeDifference: number) {
+    if (timeDifference < 0) {
+      this.reset();
+    }
     this.millisecondsToDday = ('00' + (timeDifference % this.milliSecondsInASecond).toString()).slice(-3);
     this.secondsToDday = ('0' + (Math.floor((timeDifference) / (this.milliSecondsInASecond) % this.SecondsInAMinute)).toString()).slice(-2);
     this.minutesToDday = ('0' + (Math.floor((timeDifference) / (this.milliSecondsInASecond * this.minutesInAnHour) % this.SecondsInAMinute)).toString()).slice(-2);
@@ -94,7 +97,6 @@ export class AppComponent implements OnInit {
     };
 
     this.dialog.open(WinnerBoxComponent, dialogConfig);
-    timer(this.timeDifference).subscribe(() => this.reset())
   }
 
   hideWinnerMessage() {
