@@ -218,7 +218,7 @@ export class AppComponent implements OnInit {
     let now = new Date();
     let minute;
     let hour;
-    if (now.getMinutes() > 30) {
+    if (now.getMinutes() > 29) {
       hour = now.getHours() + 1;
       minute = 0;
     } else {
