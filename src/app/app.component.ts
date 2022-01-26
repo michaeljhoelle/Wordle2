@@ -52,6 +52,7 @@ export class AppComponent implements OnInit {
     let newRow = new WordRowComponent();
     newRow.letters = ["", "", "", "", ""].map(s => ({letter: s, style: LetterboxStyle.Empty}))
     this.rows.push(newRow);
+    this.bottomRowPx = 0;
     this.currentChar = 0;
     this.currentRow = 0;
     this.letterStyles = this.getDefaultLetterStyles();
