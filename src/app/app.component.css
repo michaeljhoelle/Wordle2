@@ -21,6 +21,10 @@
   flex-direction: column;
 }
 
+.word-row-container {
+  position: relative;
+}
+
 app-word-row {
   display: block;
 }

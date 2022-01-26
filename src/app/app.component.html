@@ -1,14 +1,16 @@
 <div class="master">
   <div class="center">
-    <app-word-row *ngFor="let row of rows; let i = index;" [letters]="rows[i].letters"></app-word-row>
-  </div>
-
-  <div class="keyboard">
+    <div class="word-row-container" [ngStyle]="{'bottom.px': bottomRowPx}">
+      <app-word-row *ngFor="let row of rows; let i = index;" [letters]="rows[i].letters"></app-word-row>
+    </div>
     <div class="button-bar">
       <div *ngIf="showError">
         <div class="error-msg">{{errorMsg}}</div>
       </div>
     </div>
+  </div>
+
+  <div class="keyboard">
     <div class="button-bar">
       <button [className]="'keyboard-button ' + letterStyles.get('Q')" (click)="addLetter('Q')">Q</button>
       <button [className]="'keyboard-button ' + letterStyles.get('W')" (click)="addLetter('W')">W</button>
@@ -43,7 +45,7 @@
     </div>
     <div class="button-bar">
       <button class="keyboard-button-wide" (click)="removeLetter()">BACK</button>
-      <button class="keyboard-button-wide" (click)="submit()">ENTER</button>
+      <button class="keyboard-button-wide" (click)="submitWord()">ENTER</button>
     </div>
   </div>
 </div>

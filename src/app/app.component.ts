@@ -21,6 +21,7 @@ export class AppComponent implements OnInit {
   currentRow: number = 0;
   currentChar: number = 0;
   letterStyles: Map<string, string> = this.getDefaultLetterStyles();
+  bottomRowPx: number = 0;
 
   ngOnInit(): void {
     let time = localStorage.getItem('lastWinTime');
@@ -42,7 +43,7 @@ export class AppComponent implements OnInit {
       this.reset()
     }
     this.timeSubscription = interval(1)
-      .subscribe(x => { this.getTimeDifference(); });
+      .subscribe(() => { this.getTimeDifference(); });
   }
 
   reset() {
@@ -108,13 +109,13 @@ export class AppComponent implements OnInit {
     if (this.isAlpha(event.key)) {
       this.addLetter(event.key);
     } else if (event.key === "Enter") {
-      this.submit();
+      this.submitWord();
     } else if (event.key === "Backspace") {
       this.removeLetter();
     }
   }
 
-  submit() {
+  submitWord() {
 
     if (this.currentChar < 5) {
       this.displayError("Not long enough!");
@@ -159,6 +160,7 @@ export class AppComponent implements OnInit {
           } else {
             let newRow = new WordRowComponent();
             newRow.letters = ["", "", "", "", ""].map(s => ({letter: s, style: LetterboxStyle.Empty}))
+            this.bottomRowPx += 30;
             this.rows.push(newRow);
             this.currentRow++;
             this.currentChar = 0;
@@ -188,7 +190,11 @@ export class AppComponent implements OnInit {
   displayError(msg: string) {
     this.errorMsg = msg;
     this.showError = true;
-    timer(2000).subscribe(s => this.showError = false)
+    timer(2000).subscribe(() => this.hideError())
+  }
+
+  hideError() {
+    this.showError = false;
   }
 
   public addLetter(letter: string) {
