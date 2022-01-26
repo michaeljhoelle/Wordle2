@@ -212,7 +212,7 @@ export class AppComponent implements OnInit {
   getLastResetTime() {
     let now = new Date();
     let minute;
-    if (now.getMinutes() > 30) {
+    if (now.getMinutes() > 29) {
       minute = 30;
     } else {
       minute = 0;
