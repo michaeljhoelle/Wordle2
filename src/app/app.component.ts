@@ -6,6 +6,7 @@ import {LetterboxStyle} from "./model/LetterBox";
 import {interval, Subscription, timer} from "rxjs";
 import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 import {WinnerBoxComponent} from "./winner-box/winner-box.component";
+import {ScreenType} from "./model/ScreenType";
 
 @Component({
   selector: 'app-root',
@@ -22,8 +23,15 @@ export class AppComponent implements OnInit {
   currentChar: number = 0;
   letterStyles: Map<string, string> = this.getDefaultLetterStyles();
   bottomRowPx: number = 0;
+  centerAreaPx: number = 0;
+  screenType: ScreenType = ScreenType.desktop;
 
   ngOnInit(): void {
+    if (window.screen.width < 800) {
+      this.screenType = ScreenType.mobile;
+      this.centerAreaPx = 30;
+    }
+
     let time = localStorage.getItem('lastWinTime');
     let data = localStorage.getItem('data');
     let timeJson: Date;
@@ -161,7 +169,9 @@ export class AppComponent implements OnInit {
           } else {
             let newRow = new WordRowComponent();
             newRow.letters = ["", "", "", "", ""].map(s => ({letter: s, style: LetterboxStyle.Empty}))
-            this.bottomRowPx += 30;
+            if (window.screen.width > 800) {
+              this.bottomRowPx += 30;
+            }
             this.rows.push(newRow);
             this.currentRow++;
             this.currentChar = 0;
@@ -191,10 +201,20 @@ export class AppComponent implements OnInit {
   displayError(msg: string) {
     this.errorMsg = msg;
     this.showError = true;
+    if (window.screen.width > 800) {
+      this.bottomRowPx -= 10;
+    } else {
+      this.bottomRowPx -= 20;
+    }
     timer(2000).subscribe(() => this.hideError())
   }
 
   hideError() {
+    if (window.screen.width > 800) {
+      this.bottomRowPx += 10;
+    } else {
+      this.bottomRowPx += 20;
+    }
     this.showError = false;
   }
 

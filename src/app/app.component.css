@@ -21,8 +21,20 @@
   flex-direction: column;
 }
 
-.word-row-container {
+.word-row-container-desktop {
   position: relative;
+}
+
+.word-row-container-mobile {
+  position: absolute;
+  bottom: 0;
+}
+
+@media only screen and (max-width: 800px) {
+  .center {
+    position: relative;
+    bottom: 0;
+  }
 }
 
 app-word-row {
