@@ -25,6 +25,7 @@ export class AppComponent implements OnInit {
   bottomRowPx: number = 0;
   centerAreaPx: number = 0;
   screenType: ScreenType = ScreenType.desktop;
+  rowLock: boolean = false;
 
   ngOnInit(): void {
     if (window.screen.width < 800) {
@@ -131,8 +132,11 @@ export class AppComponent implements OnInit {
       return;
     }
 
+    this.rowLock = true;
+
     this.wordClient.verifyWord(this.rows[this.currentRow].letters.map(o => o.letter).join('').toLowerCase())
       .subscribe((data: number[]) => {
+        this.rowLock = false;
         let winner: boolean = true;
         if (data.length > 0) {
           let style: LetterboxStyle;
@@ -199,14 +203,16 @@ export class AppComponent implements OnInit {
   }
 
   displayError(msg: string) {
-    this.errorMsg = msg;
-    this.showError = true;
-    if (window.screen.width > 800) {
-      this.bottomRowPx -= 10;
-    } else {
-      this.bottomRowPx -= 20;
+    if (!this.showError) {
+      this.errorMsg = msg;
+      this.showError = true;
+      if (window.screen.width > 800) {
+        this.bottomRowPx -= 10;
+      } else {
+        this.bottomRowPx -= 20;
+      }
+      timer(2000).subscribe(() => this.hideError())
     }
-    timer(2000).subscribe(() => this.hideError())
   }
 
   hideError() {

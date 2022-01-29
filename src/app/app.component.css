@@ -1,9 +1,14 @@
 .body {
   font-family: Calibri, sans-serif;
+  overflow-y: auto;
+}
+
+app-root {
+  overflow-y: auto;
 }
 
 .master {
-  width: 500px;
+  overflow-y: auto;
   height: 100%;
   max-width: 500px;
   display: flex;
@@ -13,19 +18,41 @@
   touch-action: manipulation;
 }
 
+.top-nav {
+  background: white;
+  z-index: 5;
+  float: left;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 24px;
+  height: 24px;
+  vertical-align: center;
+  border-bottom: black solid 1px;
+}
+
 .center {
   display: flex;
   flex-grow: 1;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  height: 100%;
 }
 
 .word-row-container-desktop {
+  z-index: 1;
+  flex-direction: column;
+  display: flex;
+  flex-wrap: nowrap;
   position: relative;
 }
 
 .word-row-container-mobile {
+  z-index: 1;
+  flex-direction: column;
+  display: flex;
+  flex-wrap: nowrap;
   position: absolute;
   bottom: 0;
 }
@@ -38,24 +65,30 @@
 }
 
 app-word-row {
-  display: block;
+  display: flex;
+  flex-shrink: 10;
 }
 
 .keyboard {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
   bottom: 0;
-  width: 500px;
-  height: 230px;
 }
 
 .button-bar {
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  flex-shrink: 3;
+  min-width: 0;
 }
 
 .keyboard-button {
+  flex-wrap: nowrap;
+  background-color: #d3d6da;
   border: none;
-  font-size: 32px;
-  width: 40px;
+  font-size: 24px;
+  width: 9%;
   height: 50px;
   padding: 2px;
   margin: 2px;
@@ -63,12 +96,19 @@ app-word-row {
 
 .keyboard-button-wide
 {
+  flex-wrap: nowrap;
+  background-color: #d3d6da;
   border: none;
-  font-size: 32px;
-  width: 150px;
+  font-size: 18px;
+  line-height: 18px;
+  width: 14%;
   height: 50px;
   padding: 2px;
   margin: 2px;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  vertical-align: middle;
 }
 
 .error-msg {
@@ -96,7 +136,4 @@ app-word-row {
 
 .timer {
   font-size: 32px;
-  position: absolute;
-  top: 10px;
-  right: 10px;
 }

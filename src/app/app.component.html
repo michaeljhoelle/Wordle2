@@ -1,4 +1,10 @@
 <div class="master">
+  <div class = top-nav>
+    <div class="timer">
+      <span> {{minutesToDday}} : {{secondsToDday}} : {{millisecondsToDday}} </span>
+    </div>
+  </div>
+
   <div class="center" [ngStyle]="{'bottom.px': centerAreaPx}">
     <div [className]="'word-row-container-' + screenType" class="word-row-container" [ngStyle]="{'bottom.px': bottomRowPx}">
       <app-word-row *ngFor="let row of rows; let i = index;" [letters]="rows[i].letters"></app-word-row>
@@ -35,6 +41,7 @@
       <button [className]="'keyboard-button ' + letterStyles.get('L')" (click)="addLetter('L')">L</button>
     </div>
     <div class="button-bar">
+      <button class="keyboard-button-wide" (click)="submitWord()"><mat-icon>keyboard_return</mat-icon></button>
       <button [className]="'keyboard-button ' + letterStyles.get('Z')" (click)="addLetter('Z')">Z</button>
       <button [className]="'keyboard-button ' + letterStyles.get('X')" (click)="addLetter('X')">X</button>
       <button [className]="'keyboard-button ' + letterStyles.get('C')" (click)="addLetter('C')">C</button>
@@ -42,13 +49,7 @@
       <button [className]="'keyboard-button ' + letterStyles.get('B')" (click)="addLetter('B')">B</button>
       <button [className]="'keyboard-button ' + letterStyles.get('N')" (click)="addLetter('N')">N</button>
       <button [className]="'keyboard-button ' + letterStyles.get('M')" (click)="addLetter('M')">M</button>
-    </div>
-    <div class="button-bar">
-      <button class="keyboard-button-wide" (click)="removeLetter()">BACK</button>
-      <button class="keyboard-button-wide" (click)="submitWord()">ENTER</button>
+      <button class="keyboard-button-wide" (click)="removeLetter()"><mat-icon>backspace</mat-icon></button>
     </div>
   </div>
-</div>
-<div class="timer">
-  <span> {{minutesToDday}} : {{secondsToDday}} : {{millisecondsToDday}} </span>
 </div>
