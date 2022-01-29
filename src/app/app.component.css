@@ -92,6 +92,7 @@ app-word-row {
   height: 50px;
   padding: 2px;
   margin: 2px;
+  border-radius: 5px;
 }
 
 .keyboard-button-wide
@@ -109,6 +110,7 @@ app-word-row {
   justify-content: center;
   text-align: center;
   vertical-align: middle;
+  border-radius: 5px;
 }
 
 .error-msg {
