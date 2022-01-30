@@ -1,8 +1,10 @@
 .letter-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: white;
   text-align: center;
   vertical-align: top;
-  display: flex;
   font-size: 40px;
   width: 50px;
   height: 50px;
@@ -15,13 +17,8 @@
     font-size: 25px;
     width: 40px;
     height: 40px;
+    text-align: center;
   }
-}
-
-.inner-p {
-  margin: 5px;
-  line-height: 40px;
-  vertical-align: center;
 }
 
 .Empty {

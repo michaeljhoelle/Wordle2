@@ -3,6 +3,13 @@
   font-size: 40px;
 }
 
+@media only screen and (max-width: 800px) {
+  .title {
+    line-height: 30px;
+    font-size: 30px;
+  }
+}
+
 .button-row {
   margin-top: 20px;
   justify-content: center;
