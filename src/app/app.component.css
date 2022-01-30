@@ -20,7 +20,7 @@ app-root {
 
 .top-nav {
   background: white;
-  z-index: 5;
+  z-index: 1;
   float: left;
   text-align: center;
   padding: 14px 16px;
@@ -41,18 +41,12 @@ app-root {
 }
 
 .word-row-container-desktop {
-  flex-shrink: 3;
-  z-index: 1;
   flex-direction: column;
-  display: flex;
   position: relative;
 }
 
 .word-row-container-mobile {
-  flex-shrink: 3;
-  z-index: 1;
   flex-direction: column;
-  display: flex;
   position: absolute;
   bottom: 0;
 }

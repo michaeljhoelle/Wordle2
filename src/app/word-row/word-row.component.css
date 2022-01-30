@@ -4,7 +4,6 @@ app-letter-box {
   width: 50px;
   height: 50px;
   padding: 5px;
-  flex-shrink: 10;
 }
 
 @media only screen and (max-width: 800px) {
@@ -19,5 +18,4 @@ app-letter-box {
 .row-container {
   display: flex;
   float: left;
-  flex-shrink: 3;
 }
