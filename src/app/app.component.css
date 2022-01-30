@@ -41,18 +41,18 @@ app-root {
 }
 
 .word-row-container-desktop {
+  flex-shrink: 3;
   z-index: 1;
   flex-direction: column;
   display: flex;
-  flex-wrap: nowrap;
   position: relative;
 }
 
 .word-row-container-mobile {
+  flex-shrink: 3;
   z-index: 1;
   flex-direction: column;
   display: flex;
-  flex-wrap: nowrap;
   position: absolute;
   bottom: 0;
 }

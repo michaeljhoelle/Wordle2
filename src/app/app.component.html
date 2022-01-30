@@ -6,7 +6,7 @@
   </div>
 
   <div class="center" [ngStyle]="{'bottom.px': centerAreaPx}">
-    <div [className]="'word-row-container-' + screenType" class="word-row-container" [ngStyle]="{'bottom.px': bottomRowPx}">
+    <div [className]="'word-row-container-' + screenType" [ngStyle]="{'bottom.px': bottomRowPx}">
       <app-word-row *ngFor="let row of rows; let i = index;" [letters]="rows[i].letters"></app-word-row>
     </div>
   </div>
