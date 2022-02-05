@@ -193,10 +193,11 @@ export class AppComponent implements OnInit {
   }
 
   letterIsCorrectElsewhere(result: number[], index: number) {
+    let answer: boolean = false;
     let attemptedLetter = this.rows[this.currentRow].letters[index].letter;
     for (let i = 0; i < 5; i++) {
       if (this.rows[this.currentRow].letters[i].letter == attemptedLetter && result[i] == 2 && i != index) {
-        return true;
+        answer = !answer;
       }
     }
     return false;
