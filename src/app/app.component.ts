@@ -200,7 +200,7 @@ export class AppComponent implements OnInit {
         answer = !answer;
       }
     }
-    return false;
+    return answer;
   }
 
   displayError(msg: string) {
