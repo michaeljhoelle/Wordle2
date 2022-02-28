@@ -62,10 +62,7 @@ export class WinnerBoxComponent implements OnInit {
   getResult() {
     let tries = this.result.length
     let triesText = this.result.length > 1 ? " tries" : " try";
-    let out = "Wordle 2\r\n" + tries + triesText + "\r\n";
-    if (tries == 69) {
-      out = out.concat("nice\r\n")
-    }
+    let out = "Wordle 2\r\n" + tries + triesText + "\r\n" + this.rank + "\r\n";
     for (let i = 0; i < this.result.length; i++) {
       let str = this.result[i].letters.map(s => {
         switch (s.style) {
