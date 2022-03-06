@@ -1,4 +1,42 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  .mat-dialog-container {
+    background-color: #404040 !important;
+  }
+
+  body,
+  .top-nav {
+    background-color: #232323 !important;
+  }
+
+  .timer span {
+    color: #e8eaed !important;
+  }
+
+  .top-nav {
+    border-bottom: none !important;
+  }
+
+  .Empty {
+    background-color: #d3d3d3 !important;
+  }
+
+  .letter-box.Empty {
+    background-color: #292a2d !important;
+  }
+
+  .letter-box p {
+    color: #e8eaed !important;
+  }
+}
