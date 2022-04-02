@@ -1,0 +1,55 @@
+<div class="master">
+  <div class = top-nav>
+    <div class="timer">
+      <span> {{minutesToDday}} : {{secondsToDday}} : {{millisecondsToDday}} </span>
+    </div>
+  </div>
+
+  <div class="center" [ngStyle]="{'bottom.px': centerAreaPx}">
+    <div [className]="'word-row-container-' + screenType" [ngStyle]="{'bottom.px': bottomRowPx}">
+      <app-word-row *ngFor="let row of rows; let i = index;" [letters]="rows[i].letters"></app-word-row>
+    </div>
+  </div>
+  <div class="button-bar" style="padding-bottom: 10px;">
+    <div *ngIf="showError">
+      <div class="error-msg">{{errorMsg}}</div>
+    </div>
+  </div>
+
+  <div class="keyboard">
+    <div class="button-bar">
+      <button [className]="'keyboard-button ' + letterStyles.get('Q')" (click)="addLetter('Q')">Q</button>
+      <button [className]="'keyboard-button ' + letterStyles.get('W')" (click)="addLetter('W')">W</button>
+      <button [className]="'keyboard-button ' + letterStyles.get('E')" (click)="addLetter('E')">E</button>
+      <button [className]="'keyboard-button ' + letterStyles.get('R')" (click)="addLetter('R')">R</button>
+      <button [className]="'keyboard-button ' + letterStyles.get('T')" (click)="addLetter('T')">T</button>
+      <button [className]="'keyboard-button ' + letterStyles.get('Y')" (click)="addLetter('Y')">Y</button>
+      <button [className]="'keyboard-button ' + letterStyles.get('U')" (click)="addLetter('U')">U</button>
+      <button [className]="'keyboard-button ' + letterStyles.get('I')" (click)="addLetter('I')">I</button>
+      <button [className]="'keyboard-button ' + letterStyles.get('O')" (click)="addLetter('O')">O</button>
+      <button [className]="'keyboard-button ' + letterStyles.get('P')" (click)="addLetter('P')">P</button>
+    </div>
+    <div class="button-bar">
+      <button [className]="'keyboard-button ' + letterStyles.get('A')" (click)="addLetter('A')">A</button>
+      <button [className]="'keyboard-button ' + letterStyles.get('S')" (click)="addLetter('S')">S</button>
+      <button [className]="'keyboard-button ' + letterStyles.get('D')" (click)="addLetter('D')">D</button>
+      <button [className]="'keyboard-button ' + letterStyles.get('F')" (click)="addLetter('F')">F</button>
+      <button [className]="'keyboard-button ' + letterStyles.get('G')" (click)="addLetter('G')">G</button>
+      <button [className]="'keyboard-button ' + letterStyles.get('H')" (click)="addLetter('H')">H</button>
+      <button [className]="'keyboard-button ' + letterStyles.get('J')" (click)="addLetter('J')">J</button>
+      <button [className]="'keyboard-button ' + letterStyles.get('K')" (click)="addLetter('K')">K</button>
+      <button [className]="'keyboard-button ' + letterStyles.get('L')" (click)="addLetter('L')">L</button>
+    </div>
+    <div class="button-bar">
+      <button class="keyboard-button-wide" (click)="submitWord()"><mat-icon>keyboard_return</mat-icon></button>
+      <button [className]="'keyboard-button ' + letterStyles.get('Z')" (click)="addLetter('Z')">Z</button>
+      <button [className]="'keyboard-button ' + letterStyles.get('X')" (click)="addLetter('X')">X</button>
+      <button [className]="'keyboard-button ' + letterStyles.get('C')" (click)="addLetter('C')">C</button>
+      <button [className]="'keyboard-button ' + letterStyles.get('V')" (click)="addLetter('V')">V</button>
+      <button [className]="'keyboard-button ' + letterStyles.get('B')" (click)="addLetter('B')">B</button>
+      <button [className]="'keyboard-button ' + letterStyles.get('N')" (click)="addLetter('N')">N</button>
+      <button [className]="'keyboard-button ' + letterStyles.get('M')" (click)="addLetter('M')">M</button>
+      <button class="keyboard-button-wide" (click)="removeLetter()"><mat-icon>backspace</mat-icon></button>
+    </div>
+  </div>
+</div>

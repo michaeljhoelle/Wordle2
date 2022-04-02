@@ -15,13 +15,17 @@ import {MatDialogModule} from "@angular/material/dialog";
 import {ReactiveFormsModule} from "@angular/forms";
 import {MatIconModule} from "@angular/material/icon";
 import {ClipboardModule} from "@angular/cdk/clipboard";
+import {RouterTestingModule} from "@angular/router/testing";
+import { WordleComponent } from './wordle/wordle.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
     AppComponent,
     WordRowComponent,
     LetterBoxComponent,
-    WinnerBoxComponent
+    WinnerBoxComponent,
+    WordleComponent
   ],
   imports: [
     BrowserModule,
@@ -34,7 +38,12 @@ import {ClipboardModule} from "@angular/cdk/clipboard";
     MatDialogModule,
     ReactiveFormsModule,
     MatIconModule,
-    ClipboardModule
+    ClipboardModule,
+    RouterTestingModule,
+    RouterModule.forRoot([
+      {path: 'wordle', component: WordleComponent},
+      {path: '', redirectTo: '/wordle', pathMatch: 'full'},
+    ])
   ],
   providers: [],
   bootstrap: [AppComponent]

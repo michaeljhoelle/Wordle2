@@ -15,7 +15,11 @@ export class WordClient {
   'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE'});
   url = "https://api.memecenter.org";
 
-  verifyWord(word: string) {
-    return this.http.get<number[]>(this.url + "/words/verify/" + word, {headers: this.headers});
+  verifyWord(word: string, password: any) {
+    let path = this.url + "/words/verify/" + word
+    if (password) {
+      path = path.concat("?password=" + password)
+    }
+    return this.http.get<number[]>(path, {headers: this.headers});
   }
 }
