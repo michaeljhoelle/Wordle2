@@ -4,6 +4,10 @@ import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {WordRow} from "../model/WordRow";
 import {LetterboxStyle} from "../model/LetterBox";
 
+function isDarkMode() {
+  return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+}
+
 @Component({
   selector: 'app-winner-box',
   templateUrl: './winner-box.component.html',
@@ -68,7 +72,11 @@ export class WinnerBoxComponent implements OnInit {
         switch (s.style) {
           default:
           case LetterboxStyle.Wrong:
-            return "⬜"
+            if (isDarkMode()) {
+              return "⬛"
+            } else{
+              return "⬜"
+            }
           case LetterboxStyle.Close:
             return "🟨"
           case LetterboxStyle.Correct:
